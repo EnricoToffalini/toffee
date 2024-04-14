@@ -1,0 +1,14 @@
+Package: toffee
+Type: Package
+Title: Custom functions by Toffa
+Version: 0.1.0
+Date: 2024-04-14
+Author: Enrico Toffalini
+Maintainer: Enrico Toffalini <enrico.toffalini@unipd.it>
+Description: Custom functions by Toffa
+Imports:
+	ggplot2
+License: GPL-3
+Encoding: UTF-8
+URL: https://github.com/EnricoToffalini/toffee
+RoxygenNote: 7.2.3
