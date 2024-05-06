@@ -52,6 +52,31 @@ hg = function(cgN,cgM,cgSD, tgN,tgM,tgSD){
 
 ##########################################
 
+#' Combine across effect sizes / multiple outcomes
+#' @description Combine across effect sizes / multiple outcomes using the strategy proposed by Borenstein et al. (2009, pp.226-229): unweighted average is used for point estimate, which is adequate assuming that very similar variances apply to all effect sizes within a cluster/study. This does a similar job as the "metafor" function aggregate.escalc with argument weighted = FALSE, but it may be more practical because its inputs are vectors of effects sizes and variances instead of an "escalc" object. 
+#' @param eff vector of effect sizes to be combined
+#' @param vi vector of variances of the effect sizes
+#' @param rho assumed correlation across effect sizes (applies to all covariances)
+#' @return list with combined effect size (mu) and its variance (v)
+#' @export
+
+combine = function(eff=c(),vi=c(),rho=.7){
+  mu = mean(eff)
+  if(length(vi)==1) v = vi
+  if(length(vi)>1){
+    Svi = vi
+    for(i in 1:length(vi)){
+      srvv = 0
+      for(j in 1:length(vi)) if(i!=j) srvv = srvv + rho*sqrt(vi[i])*sqrt(vi[j])
+      Svi[i] = Svi[i] + srvv
+    }
+    v = sum(Svi) * ((1/length(Svi))^2)
+  }
+  return(list(mu=mu,v=v))
+}
+
+##########################################
+
 #' Enhanced funnel plot
 #' @description Depicts funnel plot with colors and shapes for studies in multilevel meta-analysis, and possibly plot pet-peese meta-regression if required
 #' @param fit a rma or rma.mv fitted object
