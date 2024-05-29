@@ -53,7 +53,7 @@ hg = function(cgN,cgM,cgSD, tgN,tgM,tgSD){
 ##########################################
 
 #' Combine across effect sizes / multiple outcomes
-#' @description Combine across effect sizes / multiple outcomes using the strategy proposed by Borenstein et al. (2009, pp.226-229): unweighted average is used for point estimate, which is adequate assuming that very similar variances apply to all effect sizes within a cluster/study. This does a similar job as the "metafor" function aggregate.escalc with argument weighted = FALSE, but it may be more practical because its inputs are vectors of effects sizes and variances instead of an "escalc" object. 
+#' @description Combine across effect sizes / multiple outcomes using the strategy proposed by Borenstein et al. (2009, pp.226-229): unweighted average is used for point estimate, which is adequate assuming that very similar variances apply to all effect sizes within a cluster/study. This does a similar job as the aggregate.escalc function in "metafor" using argument weighted=FALSE, but this one may be more practical because its inputs are vectors of effects sizes and variances instead of an "escalc" object. 
 #' @param eff vector of effect sizes to be combined
 #' @param vi vector of variances of the effect sizes
 #' @param rho assumed correlation across effect sizes (applies to all covariances)

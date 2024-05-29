@@ -17,5 +17,5 @@ combine(eff = c(), vi = c(), rho = 0.7)
 list with combined effect size (mu) and its variance (v)
 }
 \description{
-Combine across effect sizes / multiple outcomes using the strategy proposed by Borenstein et al. (2009, pp.226-229): unweighted average is used for point estimate, which is adequate assuming that very similar variances apply to all effect sizes within a cluster/study. This does a similar job as the "metafor" function aggregate.escalc with argument weighted = FALSE, but it may be more practical because its inputs are vectors of effects sizes and variances instead of an "escalc" object.
+Combine across effect sizes / multiple outcomes using the strategy proposed by Borenstein et al. (2009, pp.226-229): unweighted average is used for point estimate, which is adequate assuming that very similar variances apply to all effect sizes within a cluster/study. This does a similar job as the aggregate.escalc function in "metafor" using argument weighted=FALSE, but this one may be more practical because its inputs are vectors of effects sizes and variances instead of an "escalc" object.
 }
