@@ -43,4 +43,30 @@ try_seed = function(expr, maxrun = 10) {
 
 ##########################################
 
+#' Transform z-score(s) into Sum Score(s) 
+#' @description Transform z-score(s) into "plausible" Sum Score(s) that could be obtained from a test or questionnaire with a finite number of items with binomial or ordinal responses
+#' @param z A single z-score or a vector of z-scores, plausibly reflecting the "true" latent scores. Must be numeric
+#' @param nItems The number of items composing the test or questionnaire
+#' @param minResp The minimum observable response to a single item (for binomial responses 0 is recommended; for a Likert scale in 1-4, should be 1). Must be an integer number
+#' @param maxResp The maximum observable response to a single item (for binomial responses 1 is recommended; for a Likert scale in 1-4, should be 4). Must be an integer number
+#' @param itemZmin The item difficulty of the easiest item, on a z-score scale. Other item difficulties will be computed on equal interval between intemZmin and itemZmax
+#' @param itemZmax The item difficulty of the most difficult item, on a z-score scale
+#'
+#' @return The "z" vector transformed in a vector of plausible sum scores
+#' @export
+z2SumScore = function(z=NA,nItems=10,minResp=1,maxResp=4,itemZmin=-2,itemZmax=+2){
+  require(scales)
+  levels = min(c(minResp,maxResp)):max(c(minResp,maxResp))
+  if(minResp %% 1 !=0 | maxResp %% 1 !=0) stop("both minResp and maxResp must be integer numbers")
+  itemDiff = seq(itemZmin,itemZmax,length.out=nItems)
+  resp = matrix(rep(z,length(nItems)),nrow=length(z),ncol=nItems)
+  resp = t(t(resp) - itemDiff)
+  resp = matrix(resp, nrow=length(z),ncol=nItems)
+  resp = pnorm(resp)*(max(levels)-min(levels))+min(levels)
+  resp = round(rowSums(resp))
+  return(resp)
+}
+
+##########################################
+
 
