@@ -22,7 +22,7 @@ z2SumScore(
 
 \item{maxResp}{The maximum observable response to a single item (for binomial responses 1 is recommended; for a Likert scale in 1-4, should be 4). Must be an integer number}
 
-\item{itemZmin}{The item difficulty of the easiest item, on a z-score scale. Other item difficulties will be computed on equal interval between intemZmin and itemZmax}
+\item{itemZmin}{The item difficulty of the easiest item, on a z-score scale. All other item difficulties will be computed on equal intervals between this and itemZmax}
 
 \item{itemZmax}{The item difficulty of the most difficult item, on a z-score scale}
 }
@@ -30,5 +30,5 @@ z2SumScore(
 The "z" vector transformed in a vector of plausible sum scores
 }
 \description{
-Transform z-score(s) into "plausible" Sum Score(s) that could be obtained from a test or questionnaire with a finite number of items with binomial or ordinal responses
+Transform z-score(s) into plausible Sum Score(s) that could be obtained from a test or questionnaire with a finite number of items with binomial or ordinal responses
 }
