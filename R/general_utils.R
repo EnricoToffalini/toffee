@@ -69,4 +69,37 @@ z2SumScore = function(z=NA,nItems=10,minResp=1,maxResp=4,itemZmin=-2,itemZmax=+2
 
 ##########################################
 
+#' Calculate McDonald's Omega for latent factor reliability
+#' @description Calculate McDonald's Omega for latent factor reliability from a fitted CFA ("cfa" object) in lavaan, or from a single vector of standardized factor loadings
+#' @param fit An object fitted with the "cfa" function of the "lavaan" package
+#' @param stdLoadings Alternatively, a vector of standardized factor loadings (provide a single vector)
+#' @param absoluteValues Logical value, TRUE if loading signs must be ignored because observed variables can indifferently be positive or negative indicators of the latent factor (default)
+#'
+#' @return A list of omega coefficients (if a "cfa" object is provided) or a single numerical value representing the omega coefficient (if a vector of standardized factor loadings is provided)
+#' @export
+mcOmega = function(fit=NULL,stdLoadings=NULL,absoluteValues=TRUE){
+  if((is.null(fit)&&is.null(stdLoadings))||(!is.null(fit)&&!is.null(stdLoadings))) stop("Provide either a lavaan model with latent factors or a vector of standardized loadings, but not both")
+  if(!is.null(fit)){
+    sts = standardizedsolution(fit)
+    sts = sts[sts$op=="=~",]
+    fctrs = levels(as.factor(sts$lhs))
+    omega = list()
+    for(i in 1:length(fctrs)){
+      x = sts[sts$lhs == fctrs[i],]
+      if(absoluteValues) ldngs = abs(ldngs)
+      ldngs = x$est.std
+      omega[[i]] = sum(ldngs)^2 / (sum(ldngs)^2 + sum(1-ldngs^2))
+      names(omega)[[i]] = fctrs[i]
+    }
+  }
+  if(!is.null(stdLoadings)){
+    ldngs = stdLoadings
+    if(sum(ldngs>1)+sum(ldngs<(-1))>0) stop("Loadings are not standardized, as one or more of them exceed [-1, 1]. Please provide standardized loadings")
+    if(absoluteValues) ldngs = abs(ldngs)
+    omega = sum(ldngs)^2 / (sum(ldngs)^2 + sum(1-ldngs^2))
+  }
+  return(omega)
+}
+
+##########################################
 
