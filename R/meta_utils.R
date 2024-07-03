@@ -97,6 +97,7 @@ funnelT = function(fit=NA,petpeese=NA,showStudies=T,xlab=NA,sizetext=20){
   
   # Preliminarily calculate funnel
   b0 <- fit$beta
+  vi <- fit$vi
   se <- sqrt(fit$vi)
   se.seq <- seq(0.001, max(se), 0.01)
   eff.ll95 <- as.vector(b0) + qnorm(.025) * se.seq
