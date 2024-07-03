@@ -87,6 +87,7 @@ combine = function(eff=c(),vi=c(),rho=.7){
 #' @return funnel plot drawn with ggplot2
 #' @export
 funnelT = function(fit=NA,petpeese=NA,showStudies=T,xlab=NA,sizetext=20){
+  require(ggplot2)
   
   # fix arguments issues
   if(is.na(petpeese)) petpeese = ""
