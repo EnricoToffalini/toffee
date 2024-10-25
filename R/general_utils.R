@@ -34,7 +34,7 @@ logit2prob = function(logit=NA){
 try_seed = function(expr, maxrun = 10) {
   expr = substitute(expr)
   for (i in 1:maxrun) {
-    seed <- round(runif(1, 0, 99999))
+    seed = round(runif(1, 0, 99999))
     set.seed(seed)
     eval(expr, envir = parent.frame())
     readline(sprintf("seed = %s, Press enter to continue!", seed))
@@ -103,3 +103,51 @@ mcOmega = function(fit=NULL,stdLoadings=NULL,absoluteValues=TRUE){
 
 ##########################################
 
+#' Minimize transactions among people to settle bills
+#' @description Splitwise-like function for minimizing transactions for settling bills
+#' @param balances A named vector with the amount contributed by each person to the total expense
+#' @param digits The number of digits to round the amounts of money
+#'
+#' @return The shortest possible list indicating the amounts owed by whom to whom to settle the bill
+#' @export
+minimize_transactions = function(balances,digits=2) {
+  if(is.null(names(balances))) names(balances) = paste0("x",1:length(balances))
+  for(i in 1:length(balances)) if(names(balances)[i]=="") names(balances)[i] = paste0("x",i)
+  sumtotal = sum(balances)
+  balances = balances - sumtotal/length(balances)
+  creditors = balances[balances > 0]
+  debtors = balances[balances < 0]
+  # Initialize the list to hold transactions
+  transactions = list()
+  # Sort creditors and debtors in descending order
+  creditors = sort(creditors, decreasing = TRUE)
+  debtors = sort(debtors)
+  # Initialize transaction counter
+  transaction_count = 1
+  while (length(creditors) > 0 && length(debtors) > 0) {
+    # Take the largest debtor and largest creditor
+    creditor_name = names(creditors)[1]
+    debtor_name = names(debtors)[1]
+    creditor = creditors[1]
+    debtor = debtors[1]
+    # The transaction amount is the minimum of the two balances
+    amount = min(creditor, abs(debtor))
+    # Store the transaction with names
+    transactions[[transaction_count]] = paste0(debtor_name, " pays ", creditor_name, " ", round(amount,digits))
+    transaction_count = transaction_count + 1
+    # Update balances
+    creditors[1] = creditor - amount
+    debtors[1] = debtor + amount
+    # Remove settled accounts
+    if (creditors[1] == 0) {
+      creditors = creditors[-1]
+    }
+    if (debtors[1] == 0) {
+      debtors = debtors[-1]
+    }
+  }
+  # Return the list of transactions
+  return(transactions)
+}
+
+##########################################
