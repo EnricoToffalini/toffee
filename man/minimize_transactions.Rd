@@ -2,18 +2,25 @@
 % Please edit documentation in R/general_utils.R
 \name{minimize_transactions}
 \alias{minimize_transactions}
-\title{Minimize transactions among people to settle bills}
+\title{Minimize Transactions for Bill Settlement}
 \usage{
 minimize_transactions(balances, digits = 2)
 }
 \arguments{
-\item{balances}{A named vector with the amount contributed by each person to the total expense}
+\item{balances}{A named vector representing each person's contribution to the total expense. People who have contributed no money must have values equal to zero}
 
-\item{digits}{The number of digits to round the amounts of money}
+\item{digits}{An integer specifying the number of decimal places for rounding transaction amounts. Default is 2}
 }
 \value{
-The shortest possible list indicating the amounts owed by whom to whom to settle the bill
+A list of transactions that minimizes the number of payments needed to settle the shared expense, showing who pays whom and how much
 }
 \description{
-Splitwise-like function for minimizing transactions for settling bills
+A function that efficiently settle shared expenses by minimizing the number of transactions between contributors, similar to the approach used by Splitwise
+}
+\examples{
+# Define contributions
+balances = c(Amber = 120, Julie = 0, Phil = 20, Tommy=0)
+# Calculate the minimum transactions to settle
+transactions = minimize_transactions(balances)
+print(transactions)
 }
