@@ -7,7 +7,7 @@
 Polar_json2dataframe(file = NA)
 }
 \arguments{
-\item{file}{name of a Polar .json file}
+\item{file}{a string indicating the path to a Polar .json file}
 }
 \value{
 a dataframe with all relevant data processed

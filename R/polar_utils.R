@@ -3,7 +3,7 @@
 
 #' Polar json to dataframe
 #' @description Takes a Polar .json file as input and returns a dataframe as output. The following four types of Polar data files are accepted as input: 1) heart rate (files starting with "247ohr-..."); 2) activity (files starting with "activity-..."); 3) temperature (files starting with "generic-period-..."); 4) PPI (files starting with "ppi_samples_...")
-#' @param file name of a Polar .json file 
+#' @param file a string indicating the path to a Polar .json file
 #' @return a dataframe with all relevant data processed
 #' @export
 Polar_json2dataframe = function(file=NA){
