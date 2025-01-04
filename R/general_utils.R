@@ -111,7 +111,7 @@ mcOmega = function(fit=NULL,stdLoadings=NULL,absoluteValues=TRUE){
 #' @return A list of transactions that minimizes the number of payments needed to settle the shared expense, showing who pays whom and how much
 #' @examples
 #' # Define contributions
-#' balances = c(Amber = 120, Julie = 0, Phil = 20, Tommy=0)
+#' balances = c(Amber = 120, Julie = 20, Phil = 0, Tommy=0)
 #' # Calculate the minimum transactions to settle
 #' transactions = minimize_transactions(balances)
 #' print(transactions)

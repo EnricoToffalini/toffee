@@ -19,7 +19,7 @@ A function that efficiently settle shared expenses by minimizing the number of t
 }
 \examples{
 # Define contributions
-balances = c(Amber = 120, Julie = 0, Phil = 20, Tommy=0)
+balances = c(Amber = 120, Julie = 20, Phil = 0, Tommy=0)
 # Calculate the minimum transactions to settle
 transactions = minimize_transactions(balances)
 print(transactions)
