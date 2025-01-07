@@ -27,8 +27,8 @@ dppc2 = function(cgN,cgMpre,cgMpost,cgSDpre,cgSDpost, tgN,tgMpre,tgMpost,tgSDpre
   delta = diff/SDpre
   Cp = 1-3/(4*(tgN+cgN-2)-1)
   eff = Cp*delta
-  vi = 2*Cp^2*(1-r)*((tgN+cgN)/(tgN*cgN))*((tgN+cgN-2)/(tgN+cgN-4))*(1+delta^2/(2*(1-rho)*((tgN+cgN)/(tgN*cgN))))-delta^2
-  vi.0 = 2*Cp^2*(1-r)*((tgN+cgN)/(tgN*cgN))*((tgN+cgN-2)/(tgN+cgN-4))
+  vi = 2*Cp^2*(1-rho)*((tgN+cgN)/(tgN*cgN))*((tgN+cgN-2)/(tgN+cgN-4))*(1+delta^2/(2*(1-rho)*((tgN+cgN)/(tgN*cgN))))-delta^2
+  vi.0 = 2*Cp^2*(1-rho)*((tgN+cgN)/(tgN*cgN))*((tgN+cgN-2)/(tgN+cgN-4))
   return(list(eff=eff,vi=vi,vi.0=vi.0))
 }
 
