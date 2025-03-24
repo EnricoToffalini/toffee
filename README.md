@@ -1,4 +1,6 @@
-A personal R package containing a collection of useful functions I use across various projects. This package is a (continuously ongoing) work in progress. <br/>
+A personal R package containing a collection of useful functions I use across various projects. This package is a (continuously ongoing) work in progress. <br/><br/>
 To install the package directly from GitHub: <br/>
-install.packages("devtools") <br/>
-devtools::install_github("EnricoToffalini/toffee") <br/>
+```{r}
+install.packages("devtools") 
+devtools::install_github("EnricoToffalini/toffee") 
+```
