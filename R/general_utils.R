@@ -167,9 +167,8 @@ minimize_transactions = function(balances,digits=2) {
 #'
 #' @return The numerical value of the Standard Error (SE) associated with the above arguments
 #' @export
-SE4power = function(B = NA, power = 0.80, alpha = 0.05, alternative = c("two.sided","one.sided")){
+SE4power = function(B = NA, power = 0.80, alpha = 0.05, alternative = c("two.sided","one.sided")[1]){
   if(!alternative %in% c("two.sided","one.sided")) stop("alternative can be only 'two.sided' or 'one.sided'")
-  alternative = alternative[1]
   if(alternative == "two.sided") alpha = alpha/2
   SE = B / (qnorm(1-alpha)+qnorm(power))
   return(SE)

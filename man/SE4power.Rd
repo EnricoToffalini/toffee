@@ -8,7 +8,7 @@ SE4power(
   B = NA,
   power = 0.8,
   alpha = 0.05,
-  alternative = c("two.sided", "one.sided")
+  alternative = c("two.sided", "one.sided")[1]
 )
 }
 \arguments{
