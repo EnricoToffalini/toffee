@@ -63,7 +63,11 @@ Polar_json2dataframe = function(file=NA){
     mov = js$samples$mets$value
     stps = rep(js$samples$steps$value,each=2)[1:length(mov)]
     stps[c((length(mov)-1):length(mov))] = stps[(length(mov)-2)]
-    if(length(mov)==2880){
+    if(length(mov)>=2878){
+      if(length(mov<2880)){
+        mov[length(mov):2880] = mov[length(mov)]
+        stps[length(stps):2880] = stps[length(stps)]
+      }
       sec = ((1:2880)*30)-15
       TimeFull = as.POSIXct(sec, origin=day, tz = "UTC")
       time = format(TimeFull, "%H:%M:%S")
