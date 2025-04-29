@@ -46,21 +46,28 @@ Polar_json2dataframe = function(file=NA){
       sec = js$deviceDays$samples[[i]]$secondsFromDayStart
       TimeFull = as.POSIXct(sec, origin=day, tz = "UTC")
       time = format(TimeFull, "%H:%M:%S")
-      x = data.frame(deviceID=js$deviceDays$deviceId[[i]],
-                     day=day,
-                     TimeFull=TimeFull,
-                     time=time,
-                     heartRate=js$deviceDays$samples[[i]]$heartRate)
-      df = rbind(df,x)
+      if(!is.null(sec)){
+        x = data.frame(deviceID=js$deviceDays$deviceId[[i]],
+                       day=day,
+                       TimeFull=TimeFull,
+                       time=time,
+                       heartRate=js$deviceDays$samples[[i]]$heartRate)
+        df = rbind(df,x)
+      }
     }
   }else if(type == "activity"){
-    mov = js$samples$mets$value
-    stps = rep(js$samples$steps$value,each=2)[1:2880]
-    stps[c(2879:2880)] = stps[c(2878)]
     day = js$date
-    sec = ((1:2880)*30)-15
-    TimeFull = as.POSIXct(sec, origin=day, tz = "UTC")
-    time = format(TimeFull, "%H:%M:%S")
+    sec = NA
+    TimeFull = NA
+    time = NA
+    mov = js$samples$mets$value
+    stps = rep(js$samples$steps$value,each=2)[1:length(mov)]
+    stps[c((length(mov)-1):length(mov))] = stps[(length(mov)-2)]
+    if(length(mov)==2880){
+      sec = ((1:2880)*30)-15
+      TimeFull = as.POSIXct(sec, origin=day, tz = "UTC")
+      time = format(TimeFull, "%H:%M:%S")
+    }
     df = data.frame(deviceID=js$samples$metSources,
                     day=day,
                     TimeFull=TimeFull,
@@ -103,6 +110,4 @@ Polar_json2dataframe = function(file=NA){
 }
 
 ##########################################
-
-
 
