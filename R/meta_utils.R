@@ -112,6 +112,7 @@ funnelT = function(fit=NA,petpeese=NA,showStudies=T,xlab=NA,sizetext=20){
     if(grepl("/",Study)) Study = substr(Study,1,gregexpr("/",Study)[[1]][1]-1)
   }else{Study=""}
   d = data.frame(yi=yi,vi=vi,se=se)
+  df = data.frame(fit$data)
   if(Study!="" & showStudies==TRUE) d$study = as.factor(df[,Study])
   
   # Perform pet-peese meta-regression
@@ -168,7 +169,7 @@ funnelT = function(fit=NA,petpeese=NA,showStudies=T,xlab=NA,sizetext=20){
   }else{
     ggFunnel = ggplot()+theme(panel.grid.minor.x=element_blank(),panel.grid.major.x=element_blank(),
                               panel.grid.minor.y=element_blank(),panel.grid = element_line(size=1.2))+
-      geom_point(data=d,aes(x=se,y=eff,color=study,shape=study),size=2.6,stroke=3)+
+      geom_point(data=d,aes(x=se,y=yi,color=study,shape=study),size=2.6,stroke=3)+
       scale_shape_manual(values=rep(1:24,10)[1:length(levels(as.factor(d$study)))])+
       geom_point(data=dfp,aes(x=se,y=eff),size=1.3,color="#888888")+
       geom_segment(aes(x=0, xend = max(d$se), y = b0, yend = b0),size=1)+
