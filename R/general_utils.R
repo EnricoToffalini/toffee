@@ -1,48 +1,6 @@
 
 ##########################################
 
-#' Transform probabilities into logit values
-#' @description This function transform probabilities into logit values
-#' @param prob probability value(s) in [0, 1]
-#' @return Logit value
-#' @export
-prob2logit = function(prob=NA){
-  return(log(prob/(1-prob)))
-}
-
-##########################################
-
-#' Transform logit values into probabilities
-#' @description  This function transform logit values into probabilities
-#' @param logit logit value(s)
-#' @return Probability
-#' @export
-logit2prob = function(logit=NA){
-  odds = exp(logit)
-  return(odds / (1 + odds))
-}
-
-##########################################
-
-#' Try different seeds for a particular chunk of code
-#' @description (Re)runs a chunk of code with a different seed every time you press ENTER. Useful if the code includes random number generation. Press ESC to exit
-#' @param expr Chunk of code to try, among {} brackets
-#' @param maxrun The maximum number of times it reruns the code
-#'
-#' @return Whatever the code chunk produce (include print for text/numbers or plot for figures) plus the seed used
-#' @export
-try_seed = function(expr, maxrun = 10) {
-  expr = substitute(expr)
-  for (i in 1:maxrun) {
-    seed = round(runif(1, 0, 99999))
-    set.seed(seed)
-    eval(expr, envir = parent.frame())
-    readline(sprintf("seed = %s, Press enter to continue!", seed))
-  }
-}
-
-##########################################
-
 #' Transform z-score(s) into Sum Score(s) 
 #' @description Transform z-score(s) into plausible Sum Score(s) that could be obtained from a test or questionnaire with a finite number of items with binomial or ordinal responses
 #' @param z A single z-score or a vector of z-scores, plausibly reflecting the "true" latent scores. Must be numeric
@@ -172,6 +130,25 @@ SE4power = function(B = NA, power = 0.80, alpha = 0.05, alternative = c("two.sid
   if(alternative == "two.sided") alpha = alpha/2
   SE = abs(B) / (qnorm(1-alpha)+qnorm(power))
   return(SE)
+}
+
+##########################################
+
+#' Try different seeds for a particular chunk of code
+#' @description (Re)runs a chunk of code with a different seed every time you press ENTER. Useful if the code includes random number generation. Press ESC to exit
+#' @param expr Chunk of code to try, among {} brackets
+#' @param maxrun The maximum number of times it reruns the code
+#'
+#' @return Whatever the code chunk produce (include print for text/numbers or plot for figures) plus the seed used
+#' @export
+try_seed = function(expr, maxrun = 10) {
+  expr = substitute(expr)
+  for (i in 1:maxrun) {
+    seed = round(runif(1, 0, 99999))
+    set.seed(seed)
+    eval(expr, envir = parent.frame())
+    readline(sprintf("seed = %s, Press enter to continue!", seed))
+  }
 }
 
 ##########################################
