@@ -152,3 +152,24 @@ try_seed = function(expr, maxrun = 10) {
 }
 
 ##########################################
+
+#' Normal Quantile Transformation (Rank-based Inverse Normal Transformation)
+#' @description Transforms a numeric vector into an approximately standard normal distribution using rank-based quantile transformation (also called inverse normal transformation).
+#' @param x A numeric vector to be transformed
+#' @param naIgnore Logical. If TRUE (default), missing values (NA) are ignored during transformation. If FALSE, any presence of NA will return a vector of NAs.
+#'
+#' @return A numeric vector of the same length as \code{x}, where non-missing values are transformed to standard normal quantiles. Missing values are preserved.
+#' @examples
+#' x = c(3, 1, 4, NA, 2)
+#' normalize(x)
+#' normalize(x, naIgnore = FALSE)
+#' @export
+normalize = function(x, naIgnore = TRUE){
+  q = rep(NA, length(x))
+  if(!naIgnore && any(is.na(x))) return(q)
+  p = rank(x[!is.na(x)]) / (length(x[!is.na(x)]) + 1)
+  q[!is.na(x)] = qnorm(p)
+  return(q)
+}
+
+##########################################
