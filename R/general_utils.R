@@ -173,3 +173,46 @@ normalize = function(x, naIgnore = TRUE){
 }
 
 ##########################################
+
+#' Render all HTML files in the working directory to PDF
+#' @description Searches for all .html files in the current working directory
+#' and renders each to a PDF using \code{renderthis::to_pdf()}.
+#'
+#' @param pattern File pattern for HTML files. Default is \code{"\\.html$"}.
+#' @param install Logical. If TRUE (default), attempts to install
+#'   \code{renderthis} from GitHub if missing.
+#' @param quiet Logical. If TRUE, suppress progress messages.
+#' @param ... Additional arguments passed to \code{renderthis::to_pdf()}.
+#'
+#' @return Invisibly returns a character vector of rendered HTML files.
+#' @export
+render_all_html_to_pdf = function(pattern = "\\.html$",
+                                  install = TRUE,
+                                  quiet = FALSE,
+                                  ...) {
+  if (!requireNamespace("renderthis", quietly = TRUE)) {
+    if (!install) {
+      stop(
+        "Package 'renderthis' is required but not installed.\n",
+        "Install it with:\n",
+        "  remotes::install_github('jhelvy/renderthis')"
+      )
+    }
+    .install_renderthis()
+  }
+  html_files = list.files(pattern = pattern, full.names = TRUE)
+  if (length(html_files) == 0) {
+    message("No HTML files found in the current working directory.")
+  }
+  for (f in html_files) {
+    if (!quiet) message("Rendering: ", basename(f))
+    renderthis::to_pdf(f, ...)
+  }
+  invisible(html_files)
+}
+
+
+##########################################
+
+
+
